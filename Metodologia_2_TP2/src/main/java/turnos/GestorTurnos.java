@@ -17,6 +17,7 @@ public class GestorTurnos {
         notificacion.enviar(mensaje);
     }
 
+    //establece la notificacion por defecto del gestor, permitiendo al sistema cambiar de metodo
     public void setNotificacion(Notificacion nuevaNotificacion) {
         this.notificacion = nuevaNotificacion;
     }

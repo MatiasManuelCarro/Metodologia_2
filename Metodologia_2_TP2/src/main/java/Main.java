@@ -18,39 +18,55 @@ public class Main {
         registro.registrar("PUSH", new PushNotificacion());
 
 
-        // Crear gestor de turnos con una notificación inicial
+        // Crear gestor de turnos con una notificación inicial por defecto
         GestorTurnos gestor = new GestorTurnos(new EmailNotificacion());
 
         // Crear paciente de prueba
-        Paciente paciente = new Paciente("Matías", 33);
+        Paciente p1 = new Paciente("Matías", 33);
 
+        //Asignando turno nuevo (usa la comunicacion por defecto)
         System.out.println("\n....................................");
-        System.out.println("\nPrueba con Email");
-        gestor.asignarTurno(paciente);
+        System.out.println("\nMensaje con comunicacion del gestor por defecto");
+        gestor.asignarTurno(p1);
 
+
+        //cambio la notificacion del sistema a sms
         System.out.println("\n....................................");
         System.out.println("\nCambiando a SMS");
         gestor.setNotificacion(registro.obtener("SMS"));
-        gestor.asignarTurno(paciente);
+
+        //Asignar turno nuevo, se envia por SMS
+        gestor.asignarTurno(p1);
+
 
         System.out.println("\n....................................");
         System.out.println("\nCambiando a WhatsApp");
         gestor.setNotificacion(registro.obtener("WHATSAPP"));
-        gestor.asignarTurno(paciente);
+        gestor.asignarTurno(p1);
+
 
         System.out.println("\n....................................");
         System.out.println("\nCambiando a Telegram");
         gestor.setNotificacion(registro.obtener("TELEGRAM"));
-        gestor.asignarTurno(paciente);
+        gestor.asignarTurno(p1);
 
         System.out.println("\n....................................");
         System.out.println("\nCambiando a Push");
         gestor.setNotificacion(registro.obtener("PUSH"));
-        gestor.asignarTurno(paciente);
+        gestor.asignarTurno(p1);
 
         System.out.println("\n....................................");
         System.out.println("\nProbando error");
         gestor.setNotificacion(registro.obtener("FAX"));
-        gestor.asignarTurno(paciente);
+        gestor.asignarTurno(p1);
+
+        System.out.println("\n....................................\n");
+        // Envio de mensajes al usuario, se especifica metodo y se envia el mensaje.
+        //Permite cambiar rapidamente de metodo de mensajes
+        registro.enviar("SMS", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        registro.enviar("WHATSAPP", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        registro.enviar("PUSH", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        //FAX da error
+        registro.enviar("FAX", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
     }
 }
