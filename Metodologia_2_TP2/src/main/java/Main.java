@@ -1,4 +1,5 @@
 import notificaciones.*;
+/*import servicios.Notificador;*/
 import servicios.Notificador;
 import turnos.GestorTurnos;
 import turnos.Paciente;
@@ -7,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Crear registro
+        // Crear registro para guardar tipos de notificaciones
         RegistroNotificaciones registro = new RegistroNotificaciones();
 
         // registrando tipos de notificación
@@ -17,6 +18,8 @@ public class Main {
         registro.registrar("TELEGRAM", new TelegramNotificacion());
         registro.registrar("PUSH", new PushNotificacion());
 
+        // Crear notificador para enviar mensajes
+        Notificador notificador = new Notificador(registro);
 
         // Crear gestor de turnos con una notificación inicial por defecto
         GestorTurnos gestor = new GestorTurnos(new EmailNotificacion());
@@ -61,12 +64,13 @@ public class Main {
         gestor.asignarTurno(p1);
 
         System.out.println("\n....................................\n");
-        // Envio de mensajes al usuario, se especifica metodo y se envia el mensaje.
+        // Envio de mensajes al usuario, utilizando notificador
+        // se especifica metodo y se envia el mensaje.
         //Permite cambiar rapidamente de metodo de mensajes
-        registro.enviar("SMS", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
-        registro.enviar("WHATSAPP", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
-        registro.enviar("PUSH", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        notificador.enviar("SMS", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        notificador.enviar("WHATSAPP", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        notificador.enviar("PUSH", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
         //FAX da error
-        registro.enviar("FAX", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
+        notificador.enviar("FAX", "Hola, " + p1 .getNombre()+ ", recorda que tenes un turno hoy!");
     }
 }

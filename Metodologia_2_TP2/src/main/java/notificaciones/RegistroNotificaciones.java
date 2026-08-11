@@ -23,11 +23,5 @@ public class RegistroNotificaciones {
         return registro.getOrDefault(tipo.toUpperCase(), new ErrorNotificacion());
     }
 
-    //envia el mensaje al tipo de comunicacion seteado
-    public void enviar(String tipo, String mensaje) {
-        Notificacion n = obtener(tipo);
-        n.enviar(mensaje);
-    }
-
 
 }

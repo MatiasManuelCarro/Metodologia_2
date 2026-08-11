@@ -1,26 +1,18 @@
 package servicios;
 
-import notificaciones.*;
-
-import java.util.Map;
+import notificaciones.Notificacion;
+import notificaciones.RegistroNotificaciones;
 
 public class Notificador {
 
-    private Map<String, Notificacion> tipoNotificacion;
+    private RegistroNotificaciones registro;
 
-    public Notificador() {
-        tipoNotificacion = Map.of(
-                "EMAIL", new EmailNotificacion(),
-                "SMS", new SmsNotificacion(),
-                "WHATSAPP", new WhatsappNotificacion(),
-                "TELEGRAM", new TelegramNotificacion(),
-                "PUSH", new PushNotificacion()
-        );
+    public Notificador(RegistroNotificaciones registro) {
+        this.registro = registro;
     }
 
     public void enviar(String tipo, String mensaje) {
-        tipoNotificacion
-                .getOrDefault(tipo, new ErrorNotificacion())
-                .enviar(mensaje);
+        Notificacion n = registro.obtener(tipo);
+        n.enviar(mensaje);
     }
 }
