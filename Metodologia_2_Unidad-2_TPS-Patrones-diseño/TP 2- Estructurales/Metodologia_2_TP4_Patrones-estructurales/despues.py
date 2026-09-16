@@ -9,22 +9,6 @@ class OldGeoServiceInterface:
 
 
 # ==========================================
-# SERVICIO VIEJO DTO (Traduce la estructura nueva a la vieja)
-# ==========================================
-
-class OldGeoLocation:
-    def __init__(self, lat: float, lng: float, city: str, country: str):
-        self.lat = lat
-        self.lng = lng
-        self.city = city
-        self.country = country
-
-    #lo que devolveria el servicio viejp
-    def __repr__(self):
-        return f"OldGeoLocation(lat={self.lat}, lng={self.lng}, city='{self.city}', country='{self.country}')"
-
-
-# ==========================================
 # NUEVA API (Proveedor Moderno)
 # ==========================================
 
@@ -61,7 +45,6 @@ class GeoServiceAdapter(OldGeoServiceInterface):
     def get_location(self, ip: str) -> dict:
         ubicacion = self.provider.locate(ip)
 
-
         # Traducción al formato viejo 
         return {
             "lat": ubicacion.coordinates.latitude,
@@ -75,7 +58,7 @@ class GeoServiceAdapter(OldGeoServiceInterface):
 # ==========================================
 
 def OldGeoService():
-    #El código viejo sigue llamando a esto sin enterarse del cambio.
+    #El código viejo sigue llamando al OldGeoService() sin enterarse del cambio.
     return GeoServiceAdapter(NewGeoProvider())
 
 
@@ -83,18 +66,18 @@ def OldGeoService():
 # CLIENTE ANTES Y DESPUÉS
 # ==========================================
 
-#Es posible ver como los viejos archivos pueden seguir funcionando sin enterarse de los cambios
+#Se puede ver como los archivos viejos pueden seguir funcionando sin enterarse de los cambios
 #Tambien los archivos nuevos pueden directamente con el nuevo servicio o el adapter
 
 
 #Test con el codigo viejo (funciona usando el adapter)
-# Los archivos antiguos no necesitan ningun tipo de modificacion
+# Los archivos viejos no necesitan ningun tipo de modificacion
 def test_antes():
-    geo = OldGeoService()
+    geo = OldGeoService() #Siguen llamando a OldGeoService()
     data = geo.get_location("200.45.123.10")
     print("[ANTES] Ciudad:", data["city"], "| Latitud:", data["lat"])
 
-#Test con el adapter (se puede utilizar el adapter directamente)
+#Test con el adapter (se puede utilizar el adapter directamente - solo como demostracion)
 def test_adapter():
     geo = GeoServiceAdapter(NewGeoProvider())
     data = geo.get_location("200.45.123.10")

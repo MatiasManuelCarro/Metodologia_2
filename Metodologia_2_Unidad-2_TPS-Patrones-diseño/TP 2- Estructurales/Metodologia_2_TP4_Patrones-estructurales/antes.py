@@ -1,7 +1,5 @@
-# ==========================================
 # ANTES
 # LIBRERÍA VIEJA 
-# ==========================================
 class OldGeoService:
     def get_location(self, ip: str) -> dict:
         # Simulacion de algo que devolveria el OldGeoService
