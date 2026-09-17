@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import date
 
 
-# 1. La interfaz que todos los reportes cumplen
+#Interfaz que todos los reportes cumplen
 class Report(ABC):
    
     @abstractmethod
@@ -32,7 +32,7 @@ class Report(ABC):
 
 
 
-# 2. Las clases concretas
+# Clases concretas
 class PDFReport(Report):
     def __init__(self):
         self.content = []
@@ -141,7 +141,7 @@ class HTMLReport(Report):
 
 
 
-# 3. La fábrica concentra la decisión de construcción
+# Fábrica que contiene la decisión de construcción
 class ReportFactory:
     @staticmethod
     def create(format_type: str) -> Report:
@@ -159,7 +159,7 @@ class ReportFactory:
 
 
 
-# 4. El servicio ahora es agnóstico al formato
+# El servicio ahora no requiere saber el formato
 class ReportService:
     def generate(self, data, format_type):
         report = ReportFactory.create(format_type)  # no sabe qué tipo es
